@@ -128,8 +128,8 @@ export function BusinessCalculator() {
     return new Intl.NumberFormat("nb-NO", {
       style: "currency",
       currency: "NOK",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     }).format(amount)
   }
 
@@ -139,13 +139,13 @@ export function BusinessCalculator() {
   }
 
   return (
-  <main className="bg-background">
-    <div className="h-svh flex flex-col max-w-[800px] mx-auto">
+  <main className="bg-background p-4">
+    <div className="h-svh flex flex-col max-w-[800px] mx-auto gap-6">
       {/* Header */}
-      <div className="flex-shrink-0 p-4 text-left flex justify-between items-start">
+      <div className="flex-shrink-0 text-left flex justify-between items-center">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-1 font-mono">BRUTTO</h1>
-          <p className="text-muted-foreground text-xs uppercase tracking-wider font-mono">
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground mb-1 font-mono">Brutto</h1>
+          <p className="text-muted-foreground text-xs uppercase font-mono">
             Beregn reelle kostnader for bedriftskjøp
           </p>
         </div>
@@ -153,8 +153,9 @@ export function BusinessCalculator() {
         {/* Tax rates drawer trigger */}
         <Drawer>
           <DrawerTrigger asChild>
-            <Button variant="ghost" size="icon" className="font-mono">
-              <BookText className="w-5 h-5" />
+            <Button variant="ghost" className="font-mono">
+            Satser
+              <BookText className="size-6" />
             </Button>
           </DrawerTrigger>
           <DrawerContent>
@@ -165,16 +166,16 @@ export function BusinessCalculator() {
             <div className="px-4 pb-4">
               <div className="grid gap-4 text-sm font-mono">
                 <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
-                  <span className="font-medium">Merverdiavgift (MVA)</span>
-                  <span className="font-mono font-bold">25%</span>
+                  <span className="font-semibold">Merverdiavgift (MVA)</span>
+                  <span className="font-mono font-semibold">25%</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
-                  <span className="font-medium">Selskapsskatt</span>
-                  <span className="font-mono font-bold">22%</span>
+                  <span className="font-semibold">Selskapsskatt</span>
+                  <span className="font-mono font-semibold">22%</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
-                  <span className="font-medium">Utbytteskatt</span>
-                  <span className="font-mono font-bold">37,8%</span>
+                  <span className="font-semibold">Utbytteskatt</span>
+                  <span className="font-mono font-semibold">37,8%</span>
                 </div>
               </div>
             </div>
@@ -190,15 +191,12 @@ export function BusinessCalculator() {
       </div>
 
       {/* Main Content - Split 50/50 */}
-      <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Input Section - 50% */}
-        <div className="flex-1 p-4">
-          <Card className="h-full p-6 flex flex-col justify-center border-0 shadow-none">
+          <Card className="h-full p-6 flex flex-col justify-center border-0 shadow-none flex-1">
             <div className="space-y-6">
               <div>
                 <Label
                   htmlFor="price"
-                  className="text-sm font-bold uppercase tracking-wider text-foreground mb-3 block font-mono"
+                  className="text-sm font-semibold uppercase text-foreground mb-3 block font-mono"
                 >
                   BRUTTO
                 </Label>
@@ -211,17 +209,17 @@ export function BusinessCalculator() {
                   value={price}
                   onChange={handlePriceChange}
                   placeholder="10000"
-                  className="h-16 text-2xl font-mono text-center"
+                  className="h-20 !text-2xl font-mono text-center"
                 />
                 {price && !isNaN(Number.parseFloat(price.replace(/[^\d.,]/g, "").replace(",", "."))) && (
-                  <p className="text-xs text-muted-foreground mt-2 text-center font-mono">
+                  <p className="text-lg text-muted-foreground mt-4 text-center font-mono">
                     {formatCurrency(Number.parseFloat(price.replace(/[^\d.,]/g, "").replace(",", ".")) || 0)}
                   </p>
                 )}
               </div>
 
               <div className="space-y-4 pt-4">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-foreground font-mono">VALG</h3>
+                <h3 className="text-sm font-semibold uppercase text-foreground font-mono">VALG</h3>
 
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
@@ -249,7 +247,7 @@ export function BusinessCalculator() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <button type="button" className="focus:outline-none">
-                          <HelpCircle className="w-4 h-4 text-muted-foreground cursor-help" />
+                          <HelpCircle className="size-6 text-muted-foreground cursor-help" />
                         </button>
                       </PopoverTrigger>
                       <PopoverContent className="font-mono text-sm">
@@ -271,7 +269,7 @@ export function BusinessCalculator() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <button type="button" className="focus:outline-none">
-                          <HelpCircle className="w-4 h-4 text-muted-foreground cursor-help" />
+                          <HelpCircle className="size-6 text-muted-foreground cursor-help" />
                         </button>
                       </PopoverTrigger>
                       <PopoverContent className="font-mono text-sm">
@@ -283,13 +281,11 @@ export function BusinessCalculator() {
               </div>
             </div>
           </Card>
-        </div>
 
-        {/* Output Section - 50% */}
-        <div className="flex-1 p-4">
-          <Card className="h-full p-6 flex flex-col justify-center border-0 shadow-none">
+
+          <Card className="h-full p-6 flex flex-col justify-start border-0 shadow-none">
             <div className="space-y-6">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-foreground text-center font-mono">
+              <h3 className="text-sm font-semibold uppercase text-foreground font-mono">
                 NETTO
               </h3>
               <span className="text-xs">Pris inkl. MVA</span>
@@ -298,12 +294,12 @@ export function BusinessCalculator() {
                 <div className="space-y-4">
                   <div className="bg-primary/5 p-6 rounded">
                     <div className="text-center">
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2 font-mono">
+                      <p className="text-xs uppercase text-muted-foreground mb-2 font-mono">
                         {includeDividendTax ? "FAKTISK KOSTNAD" : "NETTO KOSTNAD TIL BEDRIFT"}
                       </p>
                       <AnimatedNumber
                         value={formatCurrency(result.netCostToBusiness)}
-                        className="text-4xl font-bold text-primary font-mono block"
+                        className="text-4xl font-semibold text-primary font-mono block"
                       />
                     </div>
                   </div>
@@ -343,9 +339,7 @@ export function BusinessCalculator() {
               )}
             </div>
           </Card>
-        </div>
       </div>
-    </div>
     </main>
   )
 }
